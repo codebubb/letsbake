@@ -1,0 +1,85 @@
+body{
+  margin:0;
+  padding: 0;
+  height: 100vh;
+  background-image: url(img/flour_n_eggs.jpg);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.recipe-card{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  width: 450px;
+  background-color: white;
+  box-shadow: 0px 0px 4px 4px rgba(0,0,0,0.3);
+}
+
+.recipe-image{
+  width: 100%;
+  height: 250px;
+  background-position: bottom center;
+  background-size: cover;
+}
+
+.recipe-detail{
+  font-family: 'Roboto Slab', serif;
+  padding: 25px 50px;
+}
+
+.recipe-detail h2{
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.recipe-detail h3{
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 0;
+  color: rgb(145, 68, 70);
+}
+
+.recipe-detail p{
+  color: rgb(60, 60, 60);
+}
+
+.recipe-rating .star{
+  background-image: url(img/star.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.recipe-menu{
+  background-color: rgba(233, 233, 233, 0.6);
+  padding: 25px 15px;
+}
+
+.recipe-menu .option, .recipe-menu .nav{
+  width: 60px;
+  height: 60px;
+  display: inline-block;
+  margin: 0 10px;
+}
+.recipe-menu .nav img{
+  padding: 0  0 15px 5px;
+  width: 70%;
+  height: 70%;
+}
+.recipe-menu .option img{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 6px solid white;
+  /*box-shadow: 0px 0px 1px 0px rgba(0,0,0,0.3);*/
+}
+
+.recipe-menu div:first-of-type {
+  margin-right: 0;
+}
