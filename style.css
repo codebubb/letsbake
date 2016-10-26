@@ -22,6 +22,7 @@ body{
   height: 250px;
   background-position: bottom center;
   background-size: cover;
+  transition: background 1s linear;
 }
 
 .recipe-detail{
@@ -84,11 +85,9 @@ body{
   border-radius: 50%;
   border: 6px solid white;
   transition: all .3s ease;
-  -webkit-transform-origin: 0% 100%;
 }
 .recipe-menu .option img:hover{
-  transform: scale(1.1);
-  border: 0px solid white;
+  border: 6px solid rgb(145, 68, 70);;
 }
 
 .recipe-menu div:first-of-type {

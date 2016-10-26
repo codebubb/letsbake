@@ -10,11 +10,11 @@
 </head>
 <body>
   <div class="recipe-card">
-    <div style="background-image: url(img/cherry-cakes.jpeg)" class="recipe-image"></div>
+    <div class="recipe-image"></div>
     <div class="recipe-detail">
-      <h2>Cheery Cherry Cakes</h2>
-      <h3>Seasonal favourite</h3>
-      <p>Enjoy these delcious and tangy cherry cakes that are guaranteed to put a smile on your face and warm you on those autumnal evenings.</p>
+      <h2></h2>
+      <h3></h3>
+      <p></p>
       <div class="recipe-rating">
         <span class="star"></span>
         <span class="star"></span>
@@ -27,19 +27,78 @@
         <img src="img/arrow-left.png" alt="">
       </div>
       <div class="option">
-        <img src="img/raspberry-cake.jpeg" alt="">
+        <a href="#raspberry-cake"><img src="img/raspberry-cake.jpeg" alt=""></a>
       </div>
       <div class="option">
-        <img src="img/choc_cakes.jpg" alt="">
+        <a href="#choc-cakes"><img src="img/choc_cakes.jpg" alt=""></a>
       </div>
       <div class="option">
-        <img src="img/cupcakes.jpeg" alt="">
+        <a href="#cupcakes"><img src="img/cupcakes.jpeg" alt=""></a>
       </div>
       <div class="nav">
         <img src="img/arrow-right.png" alt="">
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+      var cakes =
+      [
+        { id: "cherry-cakes",
+          img: "cherry-cakes.jpeg",
+          title: "Cheery Cherry Cakes",
+          subtitle: "Seasonal favourite",
+          description: "Enjoy these delcious and tangy cherry cakes that are guaranteed to put a smile on your face and warm you on those autumnal evenings."
+        },
+        { id: "raspberry-cake",
+          img: "raspberry-cake.jpeg",
+          title: "Raspberry Cake",
+          subtitle: "Fruity favourite",
+          description: "This is a sumptuous fruit delight which is sure to please anyone who is a fan of summertime berries. Perfect served with cream."
+        },
+        {
+          id: "choc-cakes",
+          img: "choc_cakes.jpg",
+          title: "Caramel Choclate Cakes",
+          subtitle: "Sweet disposition",
+          description: "For those who enjoy a full-on chocolate hit mixed with the sweetest caramel on the planet. Sugar levels will rise - you have been warned!"
+        },
+        {
+          id: "cupcakes",
+          img: "cupcakes.jpeg",
+          title: "Heavenly Cupcakes",
+          subtitle: "A little cup of heaven",
+          description: "As if the angels came down from the skies and delivered a sensuous mix of flour, eggs butter and sugar. Create your own icings to make your cupcakes your own."
+        }
+      ];
 
+      function loadCake(cake){
+        $('.recipe-image').css('background-image', "url('img/" + cake.img + "'");
+        $('.recipe-detail h2').html(cake.title);
+        $('.recipe-detail h3').html(cake.subtitle);
+        $('.recipe-detail p').html(cake.description);
+      }
+
+      function getCake(id){
+        return $.grep(cakes, function(elem){
+          return elem.id === id;
+        })[0];
+      }
+
+      function nextCake(current){
+        for(var i=0; i<cakes.length; i++){
+          if(cakes[i].id === current){
+            return i+1 === cakes.length ? 0 : i+1;
+          }
+        }
+      }
+
+      $(function(){
+        loadCake(getCake('cherry-cakes'));
+        $('.option a').on('click', function(){
+          loadCake(getCake(this.getAttribute('href').slice(1)));
+        });
+      });
+    </script>
   </div>
 </body>
 </html>
