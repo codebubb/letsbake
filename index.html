@@ -48,7 +48,7 @@
           id: "choc-cakes",
           img: "choc_cakes.jpg",
           stars: 5,
-          title: "Caramel Choclate Cakes",
+          title: "Caramel Chocolate Cakes",
           subtitle: "Sweet disposition",
           description: "For those who enjoy a full-on chocolate hit mixed with the sweetest caramel on the planet. Sugar levels will rise - you have been warned!"
         },
@@ -75,33 +75,51 @@
       }
 
       function getCake(id){
+        // Returns cake object
         return $.grep(cakes, function(elem){
           return elem.id === id;
         })[0];
       }
 
-      function nextCake(current){
-        for(var i=0; i<cakes.length; i++){
-          if(cakes[i].id === current){
-            return i+1 === cakes.length ? 0 : i+1;
-          }
-        }
+      function nextCake(currentId){
+        // Returns next cake object (list wraps if larger than cakes.length)
+        var cakeIndex = getCakeIndex(currentId);
+        return cakeIndex === cakes.length-1 ? cakes[0].id : cakes[cakeIndex+1].id;
       }
 
+      function previousCake(currentId){
+        // Returns previous cake object (list wraps if smaller than cakes.length)
+        var cakeIndex = getCakeIndex(currentId);
+        return cakeIndex === 0 ? cakes[cakes.length-1].id : cakes[cakeIndex-1].id;
+      }
+
+    function getCakeIndex(cakeId){
+      for(var i=0; i<cakes.length; i++){
+        if(cakes[i].id === cakeId){
+          return i;
+        }
+      }
+    }
+
       function buildMenu(current){
-        console.log("Building menu without: " + current);
         var cakesForMenu = cakes.filter(function(cake){
           return cake.id !== current;
         });
-        var menuHTML = "";
-        cakesForMenu.forEach(function(cake){
-          menuHTML += '<div class="option"><a href="#' + cake.id + '"><img src="img/' + cake.img + '" alt="' + cake.title + '"></a></div>';
-        });
-        $('.recipe-menu').html(menuHTML);
-        $('.option a').on('click', function(){
+        $('.recipe-menu').html(getMenuHTML(cakesForMenu, current));
+        $('.option a, .nav a').on('click', function(){
           loadCake(getCake(this.getAttribute('href').slice(1)));
           buildMenu(this.getAttribute('href').slice(1));
         });
+
+      }
+
+      function getMenuHTML(cakes, current){
+        var navPrevious = '<div class="nav"><a href="#' + previousCake(current) + '"><img  src="img/arrow-left.png" alt="" /></a></div>';
+        var navNext = '<div class="nav"><a href="#' + nextCake(current) + '"><img src="img/arrow-right.png" alt="" /></a></div>';
+        var options = cakes.reduce(function(p, cake){
+          return '<div class="option"><a href="#' + cake.id + '"><img src="img/' + cake.img + '" alt="' + cake.title + '"></a></div>' + p;
+        }, "");
+        return navPrevious + options + navNext;
       }
 
       $(function(){
