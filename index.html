@@ -6,6 +6,12 @@
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="theme-color" content="#ffffff">
   <title>Let's Bake!</title>
 </head>
 <body>
@@ -16,28 +22,9 @@
       <h3></h3>
       <p></p>
       <div class="recipe-rating">
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
-        <span class="star"></span>
       </div>
     </div>
     <div class="recipe-menu">
-      <div class="nav">
-        <img src="img/arrow-left.png" alt="">
-      </div>
-      <div class="option">
-        <a href="#raspberry-cake"><img src="img/raspberry-cake.jpeg" alt=""></a>
-      </div>
-      <div class="option">
-        <a href="#choc-cakes"><img src="img/choc_cakes.jpg" alt=""></a>
-      </div>
-      <div class="option">
-        <a href="#cupcakes"><img src="img/cupcakes.jpeg" alt=""></a>
-      </div>
-      <div class="nav">
-        <img src="img/arrow-right.png" alt="">
-      </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
@@ -45,12 +32,14 @@
       [
         { id: "cherry-cakes",
           img: "cherry-cakes.jpeg",
+          stars: 4,
           title: "Cheery Cherry Cakes",
           subtitle: "Seasonal favourite",
           description: "Enjoy these delcious and tangy cherry cakes that are guaranteed to put a smile on your face and warm you on those autumnal evenings."
         },
         { id: "raspberry-cake",
           img: "raspberry-cake.jpeg",
+          stars: 3,
           title: "Raspberry Cake",
           subtitle: "Fruity favourite",
           description: "This is a sumptuous fruit delight which is sure to please anyone who is a fan of summertime berries. Perfect served with cream."
@@ -58,6 +47,7 @@
         {
           id: "choc-cakes",
           img: "choc_cakes.jpg",
+          stars: 5,
           title: "Caramel Choclate Cakes",
           subtitle: "Sweet disposition",
           description: "For those who enjoy a full-on chocolate hit mixed with the sweetest caramel on the planet. Sugar levels will rise - you have been warned!"
@@ -66,6 +56,7 @@
           id: "cupcakes",
           img: "cupcakes.jpeg",
           title: "Heavenly Cupcakes",
+          stars: 4,
           subtitle: "A little cup of heaven",
           description: "As if the angels came down from the skies and delivered a sensuous mix of flour, eggs butter and sugar. Create your own icings to make your cupcakes your own."
         }
@@ -76,6 +67,11 @@
         $('.recipe-detail h2').html(cake.title);
         $('.recipe-detail h3').html(cake.subtitle);
         $('.recipe-detail p').html(cake.description);
+        var stars = "";
+        for(var i=0; i<cake.stars; i++){
+          stars += '<span class="star"></span>';
+        }
+        $('.recipe-rating').html(stars);
       }
 
       function getCake(id){
@@ -92,11 +88,26 @@
         }
       }
 
-      $(function(){
-        loadCake(getCake('cherry-cakes'));
+      function buildMenu(current){
+        console.log("Building menu without: " + current);
+        var cakesForMenu = cakes.filter(function(cake){
+          return cake.id !== current;
+        });
+        var menuHTML = "";
+        cakesForMenu.forEach(function(cake){
+          menuHTML += '<div class="option"><a href="#' + cake.id + '"><img src="img/' + cake.img + '" alt="' + cake.title + '"></a></div>';
+        });
+        $('.recipe-menu').html(menuHTML);
         $('.option a').on('click', function(){
           loadCake(getCake(this.getAttribute('href').slice(1)));
+          buildMenu(this.getAttribute('href').slice(1));
         });
+      }
+
+      $(function(){
+        loadCake(getCake('cherry-cakes'));
+        buildMenu('cherry-cakes');
+
       });
     </script>
   </div>
